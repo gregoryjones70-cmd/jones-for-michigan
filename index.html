@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gregory Jones -- For My Children, For Michigan</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand-block">
+    <a class="brand" href="index.html">GREGORY JONES</a>
+    <div class="tagline">Elect Gregory Jones. For the babies.</div>
+  </div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="story.html">Our Story</a>
+    <a href="family-separation.html">Family Separation</a>
+    <a href="michigan-law.html">Michigan Law</a>
+    <a href="federal-law.html">Federal Law</a>
+    <a href="lawsuits.html">The Lawsuits</a>
+    <a href="timeline.html">Timeline</a>
+    <a href="documents.html">The Documents</a>
+    <a href="ada-rights.html">ADA Rights</a>
+    <a href="videos.html">Videos</a>
+    <a href="bottom-line.html">The Bottom Line</a>
+    <a href="jtc-complaint.html">My JTC Complaint</a>
+  </nav>
+</header>
+
+<div class="campaign-banner">
+  JONES FOR 3RD CIRCUIT COURT JUDGE, WAYNE COUNTY 2028
+  <span class="gov-line">JONES FOR MICHIGAN GOVERNOR 2030</span>
+</div>
+
+<section class="hero">
+  <div class="tagline">Father &middot; U.S. Veteran &middot; Advocate</div>
+  <h1>My children were taken from me by a courtroom that would not look at the evidence.<br>This is our story, and the proof, told in the open.</h1>
+  <p class="lead">I am Gregory Charles Jones -- a disabled veteran living with cancer, and the father of Bilal, Jameel, and Maryam. For two years I have watched Wayne County Circuit Court Judge Yvonna Abraham take my family apart, one denied motion after another. Her rulings have made clear that, in her courtroom, the state and federal child protection laws that are supposed to protect my children simply do not apply to them. I have filed a formal complaint against her with the Michigan Judicial Tenure Commission, but that process is slow and its outcome is not guaranteed -- and it cannot undo what has already happened to my children. I have also taken this to the Michigan Court of Appeals, but that appeal was dismissed after Wayne County failed to produce the hearing transcript I needed to pursue it. Judges in Michigan answer to voters, not just to commissions, and I believe that is where real accountability has to come from now. I am telling this story publicly, with the documents to back every word of it, because silence is what let it happen, and because voters can only remove a judge whose record they've actually seen.</p>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="story.html">Read Our Story</a>
+    <a class="btn btn-secondary" href="documents.html">See the Proof</a>
+  </div>
+</section>
+
+<video class="scan-page" style="max-width:860px; margin:40px auto; display:block; border-radius:6px;" src="media/episode-1-not-a-mandated-reporter.mp4" autoplay muted loop playsinline></video>
+
+<section style="text-align:center; padding:20px 6% 10px;">
+  <button id="joinCampaignBtn" class="btn btn-primary" style="font-size:1.15rem; padding:16px 44px;">Join the Campaign</button>
+  <p style="font-family:Arial, Helvetica, sans-serif; color:var(--muted); margin-top:14px; font-size:1.05rem;">
+    <strong id="supporterCount" style="color:var(--navy); font-size:1.3rem;">--</strong> people have joined the fight for Bilal, Jameel &amp; Maryam
+  </p>
+</section>
+
+<div id="joinModal" class="join-modal-overlay">
+  <div class="join-modal">
+    <button id="closeJoinModal" class="join-modal-close" aria-label="Close">&times;</button>
+    <h3>Join the Campaign</h3>
+    <p>Add your name and email to show your support. Your email app will open with a message ready to go -- just hit send.</p>
+    <form id="joinForm">
+      <input type="text" id="joinName" placeholder="Your name (optional)" style="width:100%; padding:10px; margin-bottom:10px; font-family:Arial, Helvetica, sans-serif; border:1px solid var(--line); border-radius:4px; box-sizing:border-box;">
+      <input type="email" id="joinEmail" placeholder="Your email" required style="width:100%; padding:10px; margin-bottom:14px; font-family:Arial, Helvetica, sans-serif; border:1px solid var(--line); border-radius:4px; box-sizing:border-box;">
+      <button type="submit" class="btn btn-primary" style="width:100%;">Join &amp; Show Support</button>
+    </form>
+    <p id="joinConfirm" style="display:none; color:var(--navy); font-family:Arial, Helvetica, sans-serif; margin-top:14px;">Thank you for joining! An email has opened in your mail app -- please hit send to confirm.</p>
+  </div>
+</div>
+
+<script>
+(function() {
+  var COUNTER_KEY = 'gregoryjonesforjustice_supporters_2026';
+  var countEl = document.getElementById('supporterCount');
+  var btn = document.getElementById('joinCampaignBtn');
+  var modal = document.getElementById('joinModal');
+  var closeBtn = document.getElementById('closeJoinModal');
+  var form = document.getElementById('joinForm');
+  var confirmMsg = document.getElementById('joinConfirm');
+
+  fetch('https://countapi.mileshilliard.com/api/v1/get/' + COUNTER_KEY)
+    .then(function(r){ return r.json(); })
+    .then(function(data){ countEl.textContent = data.value; })
+    .catch(function(){ countEl.textContent = '0'; });
+
+  btn.addEventListener('click', function() { modal.style.display = 'flex'; });
+  closeBtn.addEventListener('click', function() { modal.style.display = 'none'; });
+  modal.addEventListener('click', function(e) { if (e.target === modal) modal.style.display = 'none'; });
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name = document.getElementById('joinName').value.trim();
+    var email = document.getElementById('joinEmail').value.trim();
+    if (!email) return;
+
+    fetch('https://countapi.mileshilliard.com/api/v1/hit/' + COUNTER_KEY)
+      .then(function(r){ return r.json(); })
+      .then(function(data){ countEl.textContent = data.value; })
+      .catch(function(){});
+
+    var subject = encodeURIComponent("I'm joining the campaign");
+    var body = encodeURIComponent('Name: ' + (name || '(not provided)') + '\nEmail: ' + email + '\n\nI want to add my support to Gregory Jones\'s campaign.');
+    window.location.href = 'mailto:gregoryjones70@gmail.com?subject=' + subject + '&body=' + body;
+
+    form.style.display = 'none';
+    confirmMsg.style.display = 'block';
+  });
+})();
+</script>
+
+<main>
+
+  <h2>Why this site exists</h2>
+  <p>On December 20, 2024, my children were taken from our home by force. My son Bilal was placed in a psychiatric facility within a day. My daughter Maryam has since been documented by multiple licensed therapists as experiencing suicidal ideation tied directly to the threat of being removed from my care. I have not seen or heard my son Jameel's voice in a year and a half.</p>
+  <p>Every one of those sentences is backed by a document. That is the point of this site: not just to tell you what happened, but to show you.</p>
+
+  <h2>What I'm doing about it</h2>
+
+  <div class="card">
+    <h3>Independent Campaign for Governor of Michigan -- 2030</h3>
+    <p>I intend to run for Governor of Michigan as an independent candidate in 2030. Not because I want a career in politics, but because I believe families like mine only get taken seriously when our stories are told publicly, in front of the people with the power to change the system. I would rather this not be necessary. I would rather see my son again.</p>
+  </div>
+
+  <div class="card">
+    <h3>3rd Circuit Court, 2028 -- A Campaign to Tell the Truth</h3>
+    <p>I also intend to put my name forward in connection with the 2028 race for the Third Circuit Court -- the same court that presided over my family's case. I want to be completely honest about what this is and is not: I am not a licensed attorney, so under Michigan law I cannot appear on the ballot for a judgeship or take the bench. I know that. What I can do is use that race, and the attention it draws, as a platform to make sure the facts of what happened to my children in that courthouse are heard by the public and by the people who do have the power to run for that seat and change how it operates.</p>
+  </div>
+
+  <p class="pull-quote">"I have filed federal lawsuits. I have filed a formal complaint with the Michigan Judicial Tenure Commission. I am not asking anyone to take my word alone -- every fact in this story comes from signed court orders, official CPS findings, and documents written by my children's own therapists."</p>
+
+  <ul class="doc-list">
+    <li>
+      <div>
+        <span class="doc-name">Summary of Federal Lawsuits Concerning Judge Yvonna Abraham</span>
+        <span class="doc-desc">The full written case summary: Judge Abraham's rulings and denied motions, every federal lawsuit naming her or arising from her actions, the December 20, 2024 raid, and the therapist documentation of suicidal risk.</span>
+      </div>
+      <a class="dl" href="documents/case-summary-public.pdf">View PDF</a>
+    </li>
+  </ul>
+
+</main>
+
+<footer>
+  <p>Gregory Charles Jones &middot; Troy, Michigan &middot; <a href="mailto:gregoryjones70@gmail.com">gregoryjones70@gmail.com</a></p>
+  <p>This is an independent, self-funded advocacy effort. It is not affiliated with any court, government office, or political party.</p>
+</footer>
+
+</body>
+</html>

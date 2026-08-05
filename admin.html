@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Manager -- Gregory Jones</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .admin-wrap { max-width: 720px; margin: 0 auto; padding: 40px 6% 90px; }
+  .step { background:#fff; border:1px solid var(--line); border-radius:6px; padding:24px 28px; margin-bottom:22px; }
+  .step h3 { margin-top:0; }
+  label { display:block; font-family: Arial, Helvetica, sans-serif; font-size:0.9rem; font-weight:bold; margin:14px 0 6px; color: var(--navy); }
+  input[type=text], textarea, select {
+    width:100%; padding:10px 12px; font-family: Arial, Helvetica, sans-serif; font-size:0.95rem;
+    border:1px solid var(--line); border-radius:4px; box-sizing:border-box;
+  }
+  textarea { min-height:70px; resize:vertical; }
+  input[type=file] { font-family: Arial, Helvetica, sans-serif; margin-top:4px; }
+  button {
+    font-family: Arial, Helvetica, sans-serif; background:var(--navy); color:#fff; border:none;
+    padding:11px 22px; border-radius:4px; font-size:0.95rem; cursor:pointer; margin-top:16px;
+  }
+  button:hover { background: var(--gold); color: var(--navy-dark); }
+  button:disabled { background:#aaa; cursor:not-allowed; }
+  .status { font-family: Arial, Helvetica, sans-serif; font-size:0.9rem; margin-top:14px; padding:10px 14px; border-radius:4px; }
+  .status.ok { background:#e7f3e8; color:#1e5c22; }
+  .status.err { background:#fbe7e7; color:#7a1c1c; }
+  .status.info { background:#eef2f8; color:#1c3a5c; }
+  .radio-row { display:flex; gap:20px; font-family: Arial, Helvetica, sans-serif; font-size:0.92rem; }
+  .radio-row label { display:flex; align-items:center; gap:6px; font-weight:normal; margin:0; }
+  .hidden { display:none; }
+  fieldset { border:none; padding:0; margin:0; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand-block">
+    <a class="brand" href="index.html">GREGORY JONES</a>
+    <div class="tagline">Elect Gregory Jones. For the babies.</div>
+  </div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="story.html">Our Story</a>
+    <a href="family-separation.html">Family Separation</a>
+    <a href="michigan-law.html">Michigan Law</a>
+    <a href="federal-law.html">Federal Law</a>
+    <a href="lawsuits.html">The Lawsuits</a>
+    <a href="timeline.html">Timeline</a>
+    <a href="documents.html">The Documents</a>
+    <a href="ada-rights.html">ADA Rights</a>
+    <a href="videos.html">Videos</a>
+    <a href="bottom-line.html">The Bottom Line</a>
+    <a href="jtc-complaint.html">My JTC Complaint</a>
+  </nav>
+</header>
+
+<main class="admin-wrap">
+  <section class="page-title">
+    <h1>Site Manager</h1>
+    <div class="sub">Add documents and videos to your site yourself -- no coding needed.</div>
+  </section>
+
+  <div class="notice">
+    This page only works in <strong>Chrome or Edge</strong> on a computer (not phones, not Safari or Firefox). This page is not linked from your public site's menu -- only people with this exact address can find it. It edits the files on your own computer; nothing is uploaded anywhere until you publish the folder to your host the same way you already do.
+  </div>
+
+  <div class="step" id="step-connect">
+    <h3>Step 1 -- Connect your site folder</h3>
+    <p>Choose the same folder your website files are saved in (the one with index.html, documents.html, styles.css in it).</p>
+    <button id="btn-connect">Choose Site Folder</button>
+    <div id="connect-status"></div>
+  </div>
+
+  <div class="step hidden" id="step-form">
+    <h3>Step 2 -- Add something</h3>
+
+    <fieldset>
+      <div class="radio-row">
+        <label><input type="radio" name="kind" value="document" checked> Document (PDF, image, etc.)</label>
+        <label><input type="radio" name="kind" value="video"> Video</label>
+      </div>
+    </fieldset>
+
+    <label for="f-title">Title</label>
+    <input type="text" id="f-title" placeholder="e.g. Statement on the December 1 Hearing">
+
+    <label for="f-desc">Short description</label>
+    <textarea id="f-desc" placeholder="One or two sentences describing what this is."></textarea>
+
+    <div id="video-url-row" class="hidden">
+      <label for="f-video-url">Video link (YouTube, Vimeo, etc.) -- OR upload a video file below</label>
+      <input type="text" id="f-video-url" placeholder="https://youtube.com/watch?v=...">
+    </div>
+
+    <label for="f-file" id="f-file-label">File to upload</label>
+    <input type="file" id="f-file">
+
+    <div>
+      <button id="btn-add">Add to Site</button>
+    </div>
+    <div id="add-status"></div>
+  </div>
+
+  <div class="step hidden" id="step-done">
+    <h3>You're set</h3>
+    <p>Your changes were saved directly into the files in your site folder. To make them visible to the public, publish/sync that folder to your host the same way you did the first time. Reload this page and reconnect the folder to add another item.</p>
+  </div>
+</main>
+
+<footer>
+  <p>Gregory Charles Jones &middot; Troy, Michigan &middot; <a href="mailto:gregoryjones70@gmail.com">gregoryjones70@gmail.com</a></p>
+</footer>
+
+<script>
+let dirHandle = null;
+
+function showStatus(el, msg, kind) {
+  el.innerHTML = '<div class="status ' + kind + '">' + msg + '</div>';
+}
+
+if (!window.showDirectoryPicker) {
+  document.getElementById('connect-status').innerHTML =
+    '<div class="status err">Your browser doesn\'t support this. Please open this page in Chrome or Edge on a computer.</div>';
+  document.getElementById('btn-connect').disabled = true;
+}
+
+document.getElementById('btn-connect').addEventListener('click', async () => {
+  const statusEl = document.getElementById('connect-status');
+  try {
+    dirHandle = await window.showDirectoryPicker();
+    // sanity check: does it look like the right folder?
+    let looksRight = false;
+    for await (const [name] of dirHandle.entries()) {
+      if (name.toLowerCase() === 'index.html') looksRight = true;
+    }
+    if (!looksRight) {
+      showStatus(statusEl, 'This folder doesn\'t have an index.html in it -- make sure you picked the folder that directly contains your site files.', 'err');
+      dirHandle = null;
+      return;
+    }
+    showStatus(statusEl, 'Connected. You can add documents and videos below.', 'ok');
+    document.getElementById('step-form').classList.remove('hidden');
+  } catch (e) {
+    if (e.name !== 'AbortError') {
+      showStatus(statusEl, 'Could not open that folder: ' + e.message, 'err');
+    }
+  }
+});
+
+document.querySelectorAll('input[name=kind]').forEach(r => {
+  r.addEventListener('change', () => {
+    const isVideo = document.querySelector('input[name=kind]:checked').value === 'video';
+    document.getElementById('video-url-row').classList.toggle('hidden', !isVideo);
+    document.getElementById('f-file-label').textContent = isVideo
+      ? 'OR upload a video file (leave blank if you used a link above)'
+      : 'File to upload';
+  });
+});
+
+async function getOrCreateSubdir(name) {
+  return await dirHandle.getDirectoryHandle(name, { create: true });
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function slugify(s) {
+  return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 60) || 'item';
+}
+
+async function readFileText(handle) {
+  const file = await handle.getFile();
+  return await file.text();
+}
+
+async function writeFileText(handle, text) {
+  const writable = await handle.createWritable();
+  await writable.write(text);
+  await writable.close();
+}
+
+async function copyFileIntoDir(subdirHandle, file, destName) {
+  const destHandle = await subdirHandle.getFileHandle(destName, { create: true });
+  const writable = await destHandle.createWritable();
+  await writable.write(file);
+  await writable.close();
+}
+
+document.getElementById('btn-add').addEventListener('click', async () => {
+  const statusEl = document.getElementById('add-status');
+  const kind = document.querySelector('input[name=kind]:checked').value;
+  const title = document.getElementById('f-title').value.trim();
+  const desc = document.getElementById('f-desc').value.trim();
+  const videoUrl = document.getElementById('f-video-url').value.trim();
+  const fileInput = document.getElementById('f-file');
+  const file = fileInput.files[0] || null;
+
+  if (!title) { showStatus(statusEl, 'Please enter a title.', 'err'); return; }
+  if (!dirHandle) { showStatus(statusEl, 'Connect your site folder first.', 'err'); return; }
+  if (kind === 'video' && !videoUrl && !file) {
+    showStatus(statusEl, 'Add a video link or upload a video file.', 'err'); return;
+  }
+  if (kind === 'document' && !file) {
+    showStatus(statusEl, 'Please choose a file to upload.', 'err'); return;
+  }
+
+  try {
+    const slug = slugify(title);
+
+    if (kind === 'document') {
+      const docsDir = await getOrCreateSubdir('documents');
+      const ext = file.name.includes('.') ? file.name.split('.').pop() : 'pdf';
+      const destName = slug + '.' + ext;
+      await copyFileIntoDir(docsDir, file, destName);
+
+      const pageHandle = await dirHandle.getFileHandle('documents.html');
+      let html = await readFileText(pageHandle);
+      html = html.replace(/\s*<li id="doc-empty-note">[\s\S]*?<\/li>\n/, '\n');
+      const entry = '    <li>\n' +
+        '      <div>\n' +
+        '        <span class="doc-name">' + escapeHtml(title) + '</span>\n' +
+        '        <span class="doc-desc">' + escapeHtml(desc) + '</span>\n' +
+        '      </div>\n' +
+        '      <a class="dl" href="documents/' + destName + '">View</a>\n' +
+        '    </li>\n';
+      html = html.replace('<!-- DOC-INSERT-POINT -->', entry + '    <!-- DOC-INSERT-POINT -->');
+      await writeFileText(pageHandle, html);
+
+    } else {
+      const videosDir = await getOrCreateSubdir('videos');
+      let linkHtml = '';
+      if (file) {
+        const ext = file.name.includes('.') ? file.name.split('.').pop() : 'mp4';
+        const destName = slug + '.' + ext;
+        await copyFileIntoDir(videosDir, file, destName);
+        linkHtml = '<video controls style="width:100%;max-width:640px;display:block;margin-top:10px;" src="videos/' + destName + '"></video>';
+      } else {
+        let embedUrl = videoUrl;
+        const yt = videoUrl.match(/(?:youtu\.be\/|v=)([A-Za-z0-9_-]{6,})/);
+        if (yt) embedUrl = 'https://www.youtube.com/embed/' + yt[1];
+        linkHtml = '<iframe style="width:100%;max-width:640px;aspect-ratio:16/9;display:block;margin-top:10px;border:0;" src="' + escapeHtml(embedUrl) + '" allowfullscreen></iframe>';
+      }
+
+      const pageHandle = await dirHandle.getFileHandle('videos.html');
+      let html = await readFileText(pageHandle);
+      html = html.replace(/\s*<li id="video-empty-note">[\s\S]*?<\/li>\n/, '\n');
+      const entry = '    <li style="display:block;">\n' +
+        '      <div>\n' +
+        '        <span class="doc-name">' + escapeHtml(title) + '</span>\n' +
+        '        <span class="doc-desc">' + escapeHtml(desc) + '</span>\n' +
+        '      </div>\n' +
+        '      ' + linkHtml + '\n' +
+        '    </li>\n';
+      html = html.replace('<!-- VIDEO-INSERT-POINT -->', entry + '    <!-- VIDEO-INSERT-POINT -->');
+      await writeFileText(pageHandle, html);
+    }
+
+    showStatus(statusEl, 'Added "' + title + '". You can add another, or publish your folder to make it live.', 'ok');
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-desc').value = '';
+    document.getElementById('f-video-url').value = '';
+    fileInput.value = '';
+    document.getElementById('step-done').classList.remove('hidden');
+  } catch (e) {
+    showStatus(statusEl, 'Something went wrong: ' + e.message, 'err');
+  }
+});
+</script>
+
+</body>
+</html>

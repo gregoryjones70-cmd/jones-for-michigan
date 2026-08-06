@@ -50,7 +50,7 @@
 <section style="text-align:center; padding:20px 6% 10px;">
   <button id="joinCampaignBtn" class="btn btn-primary" style="font-size:1.15rem; padding:16px 44px;">Join the Campaign</button>
   <p style="font-family:Arial, Helvetica, sans-serif; color:var(--muted); margin-top:14px; font-size:1.05rem;">
-    <strong id="supporterCount" style="color:var(--navy); font-size:1.3rem;">--</strong> people have joined the fight for Bilal, Jameel &amp; Maryam
+    <span id="supporterCount" style="display:none;">--</span>People have joined the fight for Bilal, Jameel &amp; Maryam
   </p>
 </section>
 
@@ -106,7 +106,7 @@
     confirmMsg.style.display = 'block';
   });
 })();
-</script>
+</script><script>(function(){var el=document.getElementById('visitCounter');fetch('https://countapi.mileshilliard.com/api/v1/hit/gregoryjonesforjustice_visits_2026').then(function(r){return r.json();}).then(function(d){if(el){el.textContent=d.value;}}).catch(function(){if(el){el.textContent='--';}});})();</script>
 
 <main>
 
@@ -142,7 +142,7 @@
 
 <footer>
   <p>Gregory Charles Jones &middot; Troy, Michigan &middot; <a href="mailto:gregoryjones70@gmail.com">gregoryjones70@gmail.com</a></p>
-  <p>This is an independent, self-funded advocacy effort. It is not affiliated with any court, government office, or political party.</p>
+  <p>This is an independent, self-funded advocacy effort. It is not affiliated with any court, government office, or political party.</p><p style="font-size:0.85rem; color:var(--muted);">Site visits: <span id="visitCounter">--</span></p>
 </footer>
 
 </body>

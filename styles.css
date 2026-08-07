@@ -66,7 +66,8 @@ nav.site-nav a:hover { color: var(--gold); }
 
 .campaign-banner {
   background: var(--gold);
-  color: var(--navy-dark);
+  color: #ffffff;
+  text-shadow: -1px -1px 0 var(--muted), 1px -1px 0 var(--muted), -1px 1px 0 var(--muted), 1px 1px 0 var(--muted);
   text-align: center;
   padding: 28px 5%;
   font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
@@ -74,8 +75,7 @@ nav.site-nav a:hover { color: var(--gold); }
   letter-spacing: 1px;
   text-transform: uppercase;
   font-size: 2.1rem;
-  line-height: 1.4;
-  border-top: 3px solid var(--navy-dark);
+      border-top: 3px solid var(--navy-dark);
   border-bottom: 3px solid var(--navy-dark);
 }
 .campaign-banner .divider {

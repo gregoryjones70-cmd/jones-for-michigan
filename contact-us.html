@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us -- Gregory Jones</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand-block">
+      <a class="brand" href="index.html">GREGORY JONES</a>
+          <div class="tagline">Not a campaign. A father's fight.</div>
+            </div>
+              <nav class="site-nav">
+                  <a href="index.html">Home</a>
+                      <a href="story.html">Our Story</a>
+                          <a href="family-separation.html">Family Separation</a>
+                              <a href="michigan-law.html">Michigan Law</a>
+                                  <a href="federal-law.html">Federal Law</a>
+                                      <a href="lawsuits.html">The Lawsuits</a>
+                                          <a href="timeline.html">Timeline</a>
+                                              <a href="documents.html">The Documents</a>
+                                                  <a href="ada-rights.html">ADA Rights</a>
+                                                      <a href="videos.html">Videos</a>
+                                                          <a href="bottom-line.html">The Bottom Line</a>
+                                                              <a href="jtc-complaint.html">My JTC Complaint</a>
+                                                                  <a href="media-kit.html">Media Kit</a>
+                                                                      <a href="contact-us.html">Contact Us</a>
+                                                                        </nav>
+                                                                        </header>
+
+                                                                        <div class="campaign-banner">
+                                                                          JONES FOR 3RD CIRCUIT COURT JUDGE, WAYNE COUNTY 2028
+                                                                            <span class="gov-line">JONES FOR MICHIGAN GOVERNOR 2030</span>
+                                                                            </div>
+
+                                                                            <main>
+                                                                              <section class="page-title">
+                                                                                  <h1>Contact Us</h1>
+                                                                                      <div class="sub">Have a tip, a question, or documentation to share? Send a message below.</div>
+                                                                                        </section>
+
+                                                                                          <div class="notice">
+                                                                                              Messages sent from this form open directly in your own email app, addressed to Gregory -- nothing is stored on this website. If your message doesn't open automatically, you can always write directly to <a href="mailto:gregoryjones70@gmail.com">gregoryjones70@gmail.com</a>.
+                                                                                                </div>
+
+                                                                                                  <div class="card">
+                                                                                                      <form id="contactForm">
+                                                                                                            <label for="contactEmail" style="display:block; font-family:Arial, Helvetica, sans-serif; font-weight:bold; margin-bottom:6px; color:var(--navy);">Your Email</label>
+                                                                                                                  <input type="email" id="contactEmail" required placeholder="you@example.com" style="width:100%; padding:10px; margin-bottom:16px; font-family:Arial, Helvetica, sans-serif; border:1px solid var(--line); border-radius:4px; box-sizing:border-box;">
+                                                                                                                  
+                                                                                                                        <label for="contactSubject" style="display:block; font-family:Arial, Helvetica, sans-serif; font-weight:bold; margin-bottom:6px; color:var(--navy);">Subject</label>
+                                                                                                                              <input type="text" id="contactSubject" required maxlength="200" placeholder="What is this about?" style="width:100%; padding:10px; margin-bottom:16px; font-family:Arial, Helvetica, sans-serif; border:1px solid var(--line); border-radius:4px; box-sizing:border-box;">
+                                                                                                                              
+                                                                                                                                    <label for="contactMessage" style="display:block; font-family:Arial, Helvetica, sans-serif; font-weight:bold; margin-bottom:6px; color:var(--navy);">Message</label>
+                                                                                                                                          <textarea id="contactMessage" required maxlength="5000" rows="10" placeholder="Type your message here (up to 5,000 characters)." style="width:100%; padding:10px; font-family:Arial, Helvetica, sans-serif; border:1px solid var(--line); border-radius:4px; box-sizing:border-box; resize:vertical;"></textarea>
+                                                                                                                                                <div id="charCount" style="text-align:right; font-family:Arial, Helvetica, sans-serif; font-size:0.85rem; color:var(--muted); margin:4px 0 18px;">0 / 5000</div>
+                                                                                                                                                
+                                                                                                                                                      <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+                                                                                                                                                          </form>
+                                                                                                                                                              <p id="contactConfirm" style="display:none; color:var(--navy); font-family:Arial, Helvetica, sans-serif; margin-top:14px;">Thank you -- an email has opened in your mail app with your message. Please hit send to deliver it.</p>
+                                                                                                                                                                </div>
+                                                                                                                                                                
+                                                                                                                                                                </main>
+                                                                                                                                                                
+                                                                                                                                                                <footer>
+                                                                                                                                                                  <p>Gregory Charles Jones &middot; Troy, Michigan &middot; <a href="mailto:gregoryjones70@gmail.com">gregoryjones70@gmail.com</a></p>
+                                                                                                                                                                    <p>This is an independent, self-funded advocacy effort. It is not affiliated with any court, government office, or political party.</p>
+                                                                                                                                                                    </footer>
+                                                                                                                                                                    
+                                                                                                                                                                    <script>
+                                                                                                                                                                    (function() {
+                                                                                                                                                                      var messageEl = document.getElementById('contactMessage');
+                                                                                                                                                                        var countEl = document.getElementById('charCount');
+                                                                                                                                                                          var form = document.getElementById('contactForm');
+                                                                                                                                                                            var confirmMsg = document.getElementById('contactConfirm');
+                                                                                                                                                                              var MAX = 5000;
+                                                                                                                                                                              
+                                                                                                                                                                                function updateCount() {
+                                                                                                                                                                                    var len = messageEl.value.length;
+                                                                                                                                                                                        countEl.textContent = len + ' / ' + MAX;
+                                                                                                                                                                                            countEl.style.color = len >= MAX ? '#7a1c1c' : 'var(--muted)';
+                                                                                                                                                                                              }
+                                                                                                                                                                                                messageEl.addEventListener('input', updateCount);
+                                                                                                                                                                                                  updateCount();
+                                                                                                                                                                                                  
+                                                                                                                                                                                                    form.addEventListener('submit', function(e) {
+                                                                                                                                                                                                        e.preventDefault();
+                                                                                                                                                                                                            var email = document.getElementById('contactEmail').value.trim();
+                                                                                                                                                                                                                var subject = document.getElementById('contactSubject').value.trim();
+                                                                                                                                                                                                                    var message = messageEl.value.trim().slice(0, MAX);
+                                                                                                                                                                                                                        if (!email || !subject || !message) return;
+                                                                                                                                                                                                                        
+                                                                                                                                                                                                                            var mailSubject = encodeURIComponent(subject);
+                                                                                                                                                                                                                                var mailBody = encodeURIComponent('From: ' + email + '\n\n' + message);
+                                                                                                                                                                                                                                    window.location.href = 'mailto:gregoryjones70@gmail.com?subject=' + mailSubject + '&body=' + mailBody;
+                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                        form.style.display = 'none';
+                                                                                                                                                                                                                                            confirmMsg.style.display = 'block';
+                                                                                                                                                                                                                                              });
+                                                                                                                                                                                                                                              })();
+                                                                                                                                                                                                                                              </script>
+                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                              </body>
+                                                                                                                                                                                                                                              </html>
+                                                                                                                                                                                                                                              

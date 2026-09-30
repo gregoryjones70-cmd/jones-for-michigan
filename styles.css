@@ -126,10 +126,17 @@ nav.site-nav a:hover { color: var(--gold); }
 }
 
 .hero p.lead {
-  max-width: 720px;
-  margin: 0 auto 26px;
-  font-size: 1.1rem;
-  color: #e6e2d8;
+  max-width: 760px;
+    margin: 0 auto 26px;
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #fffdf7;
+    background: rgba(201, 162, 75, 0.12);
+    border-left: 5px solid var(--gold);
+    border-radius: 4px;
+    padding: 24px 28px;
+    text-align: left;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.3);
 }
 
 .btn-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }

@@ -340,3 +340,11 @@ footer a { color: var(--gold); }
   color: var(--muted);
   margin-top: 6px;
 }
+
+#wayne-evidence {
+  text-align: center;
+}
+#wayne-evidence .scan-page {
+  margin-left: auto;
+  margin-right: auto;
+}
